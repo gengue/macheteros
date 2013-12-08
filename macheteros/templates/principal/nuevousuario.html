@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block tittle %}Nuevo usuario{% endblock %}
+{% block content %}
+{% if msg %}
+	{{ msg }}
+{% else %}
+<h1>Nuevo usuario</h1>
+	<form action="." method="POST">
+		{% csrf_token %}
+		{{form.as_p}}
+	<input type="submit" value="Enviar"/>
+	</form>
+{% endif %}
+{% endblock %}

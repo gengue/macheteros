@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+	<title>{% block title %} Macheteros - Inicio {% endblock %}</title>
+	{% block css %} <link rel="stylesheet" href="/media/css/estilo.css">{% endblock %}
+</head>
+<body>
+	<header>
+		<img src="/media/images/logo.png"/>
+		<hgroup>
+		</hgroup>
+		<nav>
+			<ul>
+				<li><a href="{% url 'vista_principal' %}">Inicio</a></li>
+				<li><a href="{% url 'vista_buscar_material' %}">Buscar Material</a></li>
+				<li><a href="{% url 'vista_subir_material' %}">Subir Material</a></li>
+				<li><a href="{% url 'vista_contact' %}">Contacto</a></li>
+				<li><a href="{% url 'vista_about' %}">Acerca de...</a></li>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'vista_perfil' %}">Perfil</a></li>
+					<li><a href="{% url 'vista_logout' %}">Cerrar sesion</a></li>
+				{% else %}
+					<li><a href="{% url 'vista_login' %}">Iniciar Sesion</a></li>
+				{% endif %}
+			</ul>
+		</nav>	
+	</header>
+	<section>
+		<article>
+			{% block content %}
+			{% endblock %}	
+		</article>		
+	</section>
+	<br>
+	<img src="/media/images/djangopowered.gif"/>
+	<footer>The 3 Ball soft - Copyright © 2013</footer>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Lista de productos  {% endblock %}
+{% block content %}
+<h1>Busqueda de material academico</h1>
+<br>
+	<div>
+		<form action="{% url 'vista_buscar_material' %}" method="POST">
+			{% csrf_token %}
+			{{form}}
+		<input type="submit" value="Buscar"/>
+	</form>
+	</div>
+		
+	{% if entradas %}
+	<br><strong>Resultado:</strong><br>
+		{% for i in entradas %}
+                    <a href="{% url 'vista_detalle_material' i.id %}">{{i.Titulo}}</a>
+                    <br>
+        {% endfor %}
+	{% else %}
+		{% if entradas != None %}
+		<p>No se encontraron resultados</p>
+		{% endif %}
+	{% endif %}
+{% endblock %}

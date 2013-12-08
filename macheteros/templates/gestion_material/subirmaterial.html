@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Nuevo Material{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}   
+	<form action="{% url 'vista_subir_material' %}" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="Enviar">
+	</form> 
+{% else %}
+	<p>Debe estar logeado para subir material</p>
+{% endif %}	
+{% endblock %}

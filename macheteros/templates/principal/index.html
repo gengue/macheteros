@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} Inicio - Bienvenidos {% endblock %}
+{% block content %} 
+<h1> Entradas </h1>
+{% if entradas %} 
+                {% for i in entradas %}
+                        <a href="{% url 'vista_detalle_material' i.id %}">{{i.Titulo}}</a>
+                        <br>
+                {% endfor %}
+        {% else %}
+                <h2>No existen entradas activas :( </h2>
+        {% endif%}
+{% endblock %}
+ 

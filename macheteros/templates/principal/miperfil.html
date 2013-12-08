@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+	{% if user.is_authenticated  %}
+		<h1>Mi Perfil</h1>
+		<p><strong>Nombre de usuario: </strong>{{ perfil.Usuario.name }}<br><strong>Tipo de usuario:</strong>
+		{% if perfil.TipoDeUsuario == "EST" %}
+			ESTUDIANTE</p>
+		{% else %}
+		 	DOCENTE </p>
+		{% endif %}
+		<hr>
+		<h3>Mis entradas:</h3>
+		{% for i in entradas %}
+			<a href="{% url 'vista_detalle_material' i.id %}">{{i.Titulo}}</a>
+	        <br>
+	    {% endfor %}
+	 {% else %}
+	  <h2>Debes autenticarte para acceder a tu perfil</h2>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Lista de productos  {% endblock %}
+{% block content %}
+	{% if entrada %} 
+		<h1>{{ entrada.Titulo }}</h1>
+		<div >
+			{% if entrada.Archivo.Extension == '.jpg' or entrada.Archivo.Extension == '.png' or entrada.Archivo.Extension == '.gif' or entrada.Archivo.Extension == '.jpeg' %}
+				<strong>Vista Previa: <br></strong>
+	    		<img id="imagendetalle" src="/media/files/{{entrada.Archivo.Nombre}}{{entrada.Archivo.Extension}}" />
+	    	{% elif entrada.Archivo.Extension == '.pdf'%}
+	    	<!--
+			<strong>Tipo de archivo: </strong>
+	    		<img src="/media/images/pdficon.png"/>
+	    	 -->	    		
+	    	 <div style="text-align: center; border: none;">    
+	    	 	<strong>Vista previa <br></strong>
+				<object type="application/pdf" data="http://blog.comunicacionweb.info/ejemplos/je.pdf#toolbar=1&navpanes=1&scrollbar=1" width="750" height="400" id="pdf"> 
+				<param name="src" value="/media/files/{{namefile}}" /> 
+				<p style="text-align:center; width: 60%;">Adobe Reader no se encuentra o la versi&oacute;n no es compatible, utiliza el icono para ir a la p&aacute;gina de descarga <br /> 
+				<a href="http://get.adobe.com/es/reader/" onclick="this.target='_blank'">
+				<img src="reader_icon_special.jpg" alt="Descargar Adobe Reader" width="32" height="32" style="border: none;" /></a> 
+				</p> 
+				</object> 
+				</div> 
+	    	{% elif entrada.Archivo.Extension == '.xls' or entrada.Archivo.Extension == '.xlsx'%}
+	    		<strong>Tipo de archivo: </strong>
+	    		<img src="/media/images/xlsicon.png"/>
+	    	{% elif entrada.Archivo.Extension == '.doc' or entrada.Archivo.Extension == '.docx'%}
+	    		<strong>Tipo de archivo: </strong>
+	    		<img src="/media/images/docxicon2.png"/>
+	    	{% elif entrada.Archivo.Extension == '.zip' or entrada.Archivo.Extension == '.rar'%}
+	    		<strong>Tipo de archivo:</strong>
+	    		<img src="/media/images/raricon.png"/>
+	   		{% endif %}
+		</div>
+	    
+		<p>Descripcion: {{ entrada.Descripcion }}</p>
+		<p><span><strong>Asignatura: </strong>{{entrada.Curso.Asignatura.nombre}}</span> - 
+		<span><strong>Docente: </strong>{{entrada.Curso.Docente.Nombre}} {{entrada.Curso.Docente.Apellido}}</span></p>
+		<span><strong>Publicado por: {{ entrada.Usuario.Usuario.name }}</strong></span>
+		<p><a href="{% url 'vista_descargar_material' entrada.id %}">Descargar Archivo</a></p>
+		<p>Publicado: {{ entrada.Fecha }}	</p>
+	<hr><h2>Comentarios</h2>
+	{% if comentarios %} 		
+		{% for i in comentarios %}
+			<p><strong>{{ i.Comentario.Usuario.Usuario.username }}</strong>: {{ i.Comentario.Comentario }}</p>
+		{% endfor%}
+	{% else %}
+		<p>No hay comentarios en esta entrada, se el primero en comentar</p>
+	{% endif%}
+	<hr>
+	{% if user.is_authenticated %}
+		<h3>Nuevo comentario</h3>
+		<form action="{% url 'vista_detalle_material' entrada.id %}" method="POST">
+			{% csrf_token %}
+			{{form.as_p}}
+			<input type="submit" value="Publicar">
+		</form>
+
+	{% else %}
+		<p>Para comentar debes estar registrado</p>
+	{% endif %}
+	{% endif %}
+
+{% endblock %}
